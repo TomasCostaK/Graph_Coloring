@@ -6,6 +6,7 @@ class Graph:
         self.num_vertices = num_vertices
         self.adjecency_matrix = [0] * num_vertices
         self.colors_matrix = [0] * num_vertices
+        self.cromatic_index = 0
 
         # maximum colors is always (num_vertices-1) factorial
 
@@ -44,34 +45,35 @@ class Graph:
                     used_colors.append(color)
 
                 elif curr_value == 0:
-                    print("\nGoing for: G[%d][%d]" % (row_id,column_id))
                     # used_colors = used_colors + neighbours_used_colors
-                    neighbour_colors = list(set(self.colors_matrix[row_id]) | set(self.colors_matrix[column_id]))       
-                    used_colors.extend(neighbour_colors)
-
-                    color = 1 if len(used_colors) == 0 else min( list( set(available_colors) - set(used_colors)) )
-                    #color = 1 if len(used_colors) == 0 else sorted(used_colors)[-1]+1
+                    neighbour_colors = list(set(self.colors_matrix[row_id]) | set(self.colors_matrix[column_id]))   # these are temp   
+                    # Since these neighbour colors are temporary for the edge we are looking at, we cant add them to the used colors. Since these used colors are ones we used on this vertice
+                    color = 1 if len(used_colors) == 0 else min( list( set(available_colors) - set(used_colors) - set(neighbour_colors) ) )
                     # then we fill the matrix with the color
-                    print("Used colors: ", used_colors)
                     self.colors_matrix[row_id][column_id] = color
                     self.colors_matrix[column_id][row_id] = color
                     used_colors.append(color)
                 else:
                     pass
                 
+                # at the end of each array we verify if the cromatic index is bigger, so we dont have to iterate over the array later
+                if color > self.cromatic_index:
+                    self.cromatic_index = color
+
+        print("Cromatic index for given graph is: %d" % (self.cromatic_index))
+                
+    def get_max(self, list1):
+        for i in list1:
+            if type(i)==list:
+                get_max(i)
+            else:
+                    list2.append(i)
+        return max(list2)
+
+    def print_colors_matrix(self):
         print("Colors: ", self.colors_matrix)
 
 
     # Print matrix for debugging purposes
-    def print_matrix(self):
+    def print_adj_matrix(self):
         print("Adjacency: ",self.adjecency_matrix)
-
-
-"""
-for i in range(0,row_id):
-    for j in range(0, len(self.adjecency_matrix[i])):
-        print("Analyzing: C[%d][%d] = %d ==> %d" % (i,j, self.colors_matrix[i][j], self.adjecency_matrix[row_id+1][j]))
-        if self.adjecency_matrix[i][j] == 1 and self.adjecency_matrix[row_id+1][j]==1:
-            print("We in")
-            used_colors.append(self.colors_matrix[i][j])
-"""
