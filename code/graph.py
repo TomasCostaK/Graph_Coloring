@@ -45,17 +45,20 @@ class Graph:
 
                 elif curr_value == 0:
                     print("\nGoing for: G[%d][%d]" % (row_id,column_id))
+                    # used_colors = used_colors + neighbours_used_colors
+                    neighbour_colors = list(set(self.colors_matrix[row_id]) | set(self.colors_matrix[column_id]))       
+                    used_colors.extend(neighbour_colors)
 
                     color = 1 if len(used_colors) == 0 else min( list( set(available_colors) - set(used_colors)) )
                     #color = 1 if len(used_colors) == 0 else sorted(used_colors)[-1]+1
                     # then we fill the matrix with the color
+                    print("Used colors: ", used_colors)
                     self.colors_matrix[row_id][column_id] = color
                     self.colors_matrix[column_id][row_id] = color
                     used_colors.append(color)
                 else:
                     pass
                 
-                print("Used colors: ", used_colors)
         print("Colors: ", self.colors_matrix)
 
 
