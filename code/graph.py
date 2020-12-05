@@ -22,33 +22,37 @@ class Graph:
         # we iterate every vertice by ascending order
         # this doesnt result in the least amount of colors possible, but this is NP-Complete
         # this way we only iterate the top side of the matrix
-        for column_id in range(0,self.num_vertices):
+        for row_id in range(0,self.num_vertices):
             # used colors for each vertice
             used_colors = []
-            for row_id in range(0,self.num_vertices):
+            for column_id in range(0,self.num_vertices):
                 # diagonal values of matrix
-                if column_id == row_id or self.adjecency_matrix[column_id][row_id] == 0:
+                if row_id == column_id or self.adjecency_matrix[row_id][column_id] == 0:
                     continue
 
-                curr_value = self.colors_matrix[column_id][row_id]
+                curr_value = self.colors_matrix[row_id][column_id]
 
                 # first iteration and available values
-                if curr_value == 0 and column_id == 0:
+                if curr_value == 0 and row_id == 0:
                     # we get the color 1 if there's no used color, otherwise we get color + 1, which is the next color
                     color = 1 if len(used_colors) == 0 else used_colors[-1]+1
                     # then we fill the matrix with the color
-                    self.colors_matrix[column_id][row_id] = color
                     self.colors_matrix[row_id][column_id] = color
+                    self.colors_matrix[column_id][row_id] = color
                     used_colors.append(color)
 
                 elif curr_value == 0:
-                    used_tmp = [ self.colors_matrix[column_id-1][i] for i in range(0, len(self.colors_matrix[column_id-1])) if self.adjecency_matrix[i][row_id] == 1 ]
-                    used_colors.extend( set( used_tmp ) )
-                    print("Going for: G[%d][%d]" % (column_id,row_id))
+                    print("Going for: G[%d][%d]" % (row_id,column_id))
+                    for i in range(0,row_id):
+                        if self.adjecency_matrix[row_id][i] == 0:
+                            continue
+                        for j in range(0, len(self.adjecency_matrix[i])):
+                            print("Analyzing: C[%d][%d] = %d" % (i,j, self.colors_matrix[i][j]))
+
                     color = 1 if len(used_colors) == 0 else used_colors[-1]+1
                     # then we fill the matrix with the color
-                    self.colors_matrix[column_id][row_id] = color
                     self.colors_matrix[row_id][column_id] = color
+                    self.colors_matrix[column_id][row_id] = color
                     used_colors.append(color)
                 else:
                     pass
