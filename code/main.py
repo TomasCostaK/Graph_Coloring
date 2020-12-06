@@ -40,6 +40,7 @@ if __name__ == "__main__":
     else:
         # Graph Creation and definition, by adding edges
         # Test nº 1
+        """
         graph = Graph(4)
         graph.add_edge(0,1)
         graph.add_edge(0,2)
@@ -47,9 +48,9 @@ if __name__ == "__main__":
         graph.add_edge(2,3)
 
         result = graph.color_matrix()
-        print("Chromatic Index calculated correctly? %s" % (4==result))
+        print("Chromatic Index calculated correctly? %s" % (3==result))
 
-        """
+
         # Test nº 2
         graph = Graph(5)
         graph.add_edge(0,1)
@@ -66,7 +67,7 @@ if __name__ == "__main__":
 
         result = graph.color_matrix()
         print("Chromatic Index calculated correctly? %s" % (5==result))
-
+        """
         # Test nº 3
         graph = Graph(3)
         graph.add_edge(0,1)
@@ -75,7 +76,7 @@ if __name__ == "__main__":
 
         result = graph.color_matrix()
         print("Chromatic Index calculated correctly? %s" % (3==result))
-        """
+
         # Available functions for visualizing matrixes
         graph.print_adj_matrix()    
         graph.print_colors_matrix()   

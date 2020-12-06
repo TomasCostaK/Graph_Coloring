@@ -38,7 +38,7 @@ class Graph:
                 # first iteration and available values
                 if curr_value == 0 and row_id == 0:
                     # we get the color 1 if there's no used color, otherwise we get color + 1, which is the next color
-                    color = 1 if len(used_colors) == 0 else min( list( set(available_colors) - set(used_colors)))
+                    color = min( list( set(available_colors) - set(used_colors)))
                     # then we fill the matrix with the color
                     self.colors_matrix[row_id][column_id] = color
                     self.colors_matrix[column_id][row_id] = color
@@ -47,9 +47,11 @@ class Graph:
                 elif curr_value == 0:
                     # used_colors = used_colors + neighbours_used_colors
                     neighbour_colors = list(set(self.colors_matrix[row_id]) | set(self.colors_matrix[column_id]))   # these are temp   
-                    print()
+                    #print("Analyzing G[%d][%d]" % (row_id, column_id))
+                    #print("Neighbours_colors: ", neighbour_colors)
+
                     # Since these neighbour colors are temporary for the edge we are looking at, we cant add them to the used colors. Since these used colors are ones we used on this vertice
-                    color = 1 if len(used_colors) == 0 else min( list( set(available_colors) - set(used_colors) - set(neighbour_colors) ) )
+                    color = min( list( set(available_colors) - set(used_colors) - set(neighbour_colors)))
                     # then we fill the matrix with the color
                     self.colors_matrix[row_id][column_id] = color
                     self.colors_matrix[column_id][row_id] = color
