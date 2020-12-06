@@ -47,6 +47,7 @@ class Graph:
                 elif curr_value == 0:
                     # used_colors = used_colors + neighbours_used_colors
                     neighbour_colors = list(set(self.colors_matrix[row_id]) | set(self.colors_matrix[column_id]))   # these are temp   
+                    print()
                     # Since these neighbour colors are temporary for the edge we are looking at, we cant add them to the used colors. Since these used colors are ones we used on this vertice
                     color = 1 if len(used_colors) == 0 else min( list( set(available_colors) - set(used_colors) - set(neighbour_colors) ) )
                     # then we fill the matrix with the color
@@ -61,6 +62,8 @@ class Graph:
                     self.cromatic_index = color
 
         print("Cromatic index for given graph is: %d" % (self.cromatic_index))
+        return self.cromatic_index
+
                 
     def get_max(self, list1):
         for i in list1:
