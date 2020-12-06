@@ -76,9 +76,9 @@ class Graph:
         return max(list2)
 
     def print_colors_matrix(self):
-        print("Colors: ", self.colors_matrix)
+        print("Colors Matrix: ", self.colors_matrix)
 
 
     # Print matrix for debugging purposes
     def print_adj_matrix(self):
-        print("Adjacency: ",self.adjecency_matrix)
+        print("Adjacency Matrix: ",self.adjecency_matrix)
