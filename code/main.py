@@ -39,11 +39,11 @@ if __name__ == "__main__":
 
     # Call in random graph generator
     if num_vertices != None:
+        # Added in from networkx
         G=nx.Graph()
         G.add_nodes_from([x for x in range(0, num_vertices)])
 
         tic = time.time()
-        edges = 0
         graph = Graph(num_vertices)
         for i in range(0,num_vertices):
             n_iters = random.choice([x for x in range(0,num_vertices)])
@@ -52,12 +52,11 @@ if __name__ == "__main__":
                 j = list( set([ x for x in range(num_vertices) if x != i]) - set(used_vertices))
                 j = random.choice(j)
                 #print("Creating edge: G[%d][%d]" %  (i,j))
-                edges += 1
                 graph.add_edge(i,j)
                 G.add_edge(i,j)
                 used_vertices.append(j)
         toc = time.time()
-        print("Created Graph with %d nodes and %d edges in %.2f ms" % (num_vertices, edges, toc-tic))
+        print("Created Graph with %d nodes and %d edges in %.2f ms" % (num_vertices, len(G.edges), toc-tic))
         result = graph.color_matrix()
         # Available functions for visualizing matrixes
         #print("Analyzing graph:")
@@ -65,7 +64,7 @@ if __name__ == "__main__":
         #graph.print_colors_matrix()   
 
         if testing_flag:
-            nx.draw(G)
+            nx.draw(G, with_labels=True)
             plt.savefig("simple_path.png") # save as png
             plt.show() # display
 
