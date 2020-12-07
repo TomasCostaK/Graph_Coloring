@@ -1,7 +1,10 @@
 from graph import Graph
+import networkx as nx
+import matplotlib.pyplot as plt
 import sys
 import getopt
 import random
+import time
 
 def usage():
     print("Usage: python3 main.py \n\t-t <test more graphs with given solutions: no argument>\n\t-g <generate random graph with N vertices: int>")
@@ -36,6 +39,10 @@ if __name__ == "__main__":
 
     # Call in random graph generator
     if num_vertices != None:
+        G=nx.Graph()
+        G.add_nodes_from([x for x in range(0, num_vertices)])
+
+        tic = time.time()
         edges = 0
         graph = Graph(num_vertices)
         for i in range(0,num_vertices):
@@ -47,14 +54,20 @@ if __name__ == "__main__":
                 #print("Creating edge: G[%d][%d]" %  (i,j))
                 edges += 1
                 graph.add_edge(i,j)
+                G.add_edge(i,j)
                 used_vertices.append(j)
-                
-        print("Created Graph with %d nodes and %d edges" % (num_vertices, edges))
+        toc = time.time()
+        print("Created Graph with %d nodes and %d edges in %.2f ms" % (num_vertices, edges, toc-tic))
         result = graph.color_matrix()
         # Available functions for visualizing matrixes
         #print("Analyzing graph:")
         #graph.print_adj_matrix()    
         #graph.print_colors_matrix()   
+
+        if testing_flag:
+            nx.draw(G)
+            plt.savefig("simple_path.png") # save as png
+            plt.show() # display
 
     # Testing mode - OPTARG
     # Test the scenarios we know are working

@@ -1,5 +1,5 @@
 import sys
-
+import time
 class Graph:
     def __init__(self, num_vertices):
         # Initialize array and declare num_vertices
@@ -23,6 +23,7 @@ class Graph:
         # we iterate every vertice by ascending order
         # this doesnt result in the least amount of colors possible, but this is NP-Complete
         # this way we only iterate the top side of the matrix
+        tic = time.time()
         for row_id in range(0,self.num_vertices):
             # used colors for each vertice
             used_colors = []
@@ -63,8 +64,8 @@ class Graph:
                 # at the end of each array we verify if the cromatic index is bigger, so we dont have to iterate over the array later
                 if color > self.cromatic_index:
                     self.cromatic_index = color
-
-        print("Cromatic index for given graph is: %d" % (self.cromatic_index))
+        toc = time.time()
+        print("Cromatic index for given graph is: %d\nTime elapsed for coloring: %.4fms" % (self.cromatic_index, toc-tic))
         return self.cromatic_index
 
                 
