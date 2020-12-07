@@ -7,7 +7,7 @@ class Graph:
         self.adjecency_matrix = [0] * num_vertices
         self.colors_matrix = [0] * num_vertices
         self.cromatic_index = 0
-
+        self.basic_operations = 0
         # maximum colors is always (num_vertices-1) factorial
 
         # Initialize matrix
@@ -40,6 +40,8 @@ class Graph:
                 if curr_value == 0 and row_id == 0:
                     # we get the color 1 if there's no used color, otherwise we get color + 1, which is the next color
                     color = min( list( set(available_colors) - set(used_colors)))
+                    self.basic_operations += 1 # since this is the most costy operation, we count it as a basic operation
+
                     # then we fill the matrix with the color
                     self.colors_matrix[row_id][column_id] = color
                     self.colors_matrix[column_id][row_id] = color
@@ -54,18 +56,18 @@ class Graph:
                     # Since these neighbour colors are temporary for the edge we are looking at, we cant add them to the used colors. Since these used colors are ones we used on this vertice
                     tmp_colors = list( set(available_colors) - set(used_colors) - set(neighbour_colors))
                     color = max(available_colors + used_colors + neighbour_colors)+1 if len(tmp_colors) == 0 else min(tmp_colors)
+                    self.basic_operations += 1 # since this is the most costy operation, we count it as a basic operation
+
                     # then we fill the matrix with the color
                     self.colors_matrix[row_id][column_id] = color
                     self.colors_matrix[column_id][row_id] = color
                     used_colors.append(color)
-                else:
-                    pass
                 
                 # at the end of each array we verify if the cromatic index is bigger, so we dont have to iterate over the array later
                 if color > self.cromatic_index:
                     self.cromatic_index = color
         toc = time.time()
-        print("Cromatic index for given graph is: %d\nTime elapsed for coloring: %.4fms" % (self.cromatic_index, toc-tic))
+        print("Cromatic index for given graph is: %d\n\nTime elapsed for coloring: %.3f ms\nNumber of basic operations: %d" % (self.cromatic_index, 1000*(toc-tic), self.basic_operations))
         return self.cromatic_index
 
                 

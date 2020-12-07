@@ -40,6 +40,7 @@ if __name__ == "__main__":
     # Call in random graph generator
     if num_vertices != None:
         # Added in from networkx
+        # Time doesnt start here, since this is only for testing purposes
         G=nx.Graph()
         G.add_nodes_from([x for x in range(0, num_vertices)])
 
@@ -56,17 +57,15 @@ if __name__ == "__main__":
                 G.add_edge(i,j)
                 used_vertices.append(j)
         toc = time.time()
-        print("Created Graph with %d nodes and %d edges in %.2f ms" % (num_vertices, len(G.edges), toc-tic))
+        print("Created Graph with %d nodes and %d edges in %.3f ms" % (num_vertices, len(G.edges), 1000*(toc-tic)))
         result = graph.color_matrix()
-        # Available functions for visualizing matrixes
-        #print("Analyzing graph:")
-        #graph.print_adj_matrix()    
-        #graph.print_colors_matrix()   
+        # Available functions for visualizing matrixes 
 
         if testing_flag:
             nx.draw(G, with_labels=True)
-            plt.savefig("simple_path.png") # save as png
+            plt.savefig("images/generated_graph.png") # save as png
             plt.show() # display
+            sys.exit()
 
     # Testing mode - OPTARG
     # Test the scenarios we know are working
