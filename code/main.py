@@ -36,6 +36,7 @@ if __name__ == "__main__":
 
     # Call in random graph generator
     if num_vertices != None:
+        edges = 0
         graph = Graph(num_vertices)
         for i in range(0,num_vertices):
             n_iters = random.choice([x for x in range(0,num_vertices)])
@@ -43,17 +44,17 @@ if __name__ == "__main__":
             for iteration in range(0, n_iters):
                 j = list( set([ x for x in range(num_vertices) if x != i]) - set(used_vertices))
                 j = random.choice(j)
-                print("Creating edge: G[%d][%d]" %  (i,j))
+                #print("Creating edge: G[%d][%d]" %  (i,j))
+                edges += 1
                 graph.add_edge(i,j)
                 used_vertices.append(j)
-
+                
+        print("Created Graph with %d nodes and %d edges" % (num_vertices, edges))
         result = graph.color_matrix()
-        print("Chromatic Index calculated correctly? %s\n" % (3==result))
-
         # Available functions for visualizing matrixes
-        print("Analyzing graph:")
-        graph.print_adj_matrix()    
-        graph.print_colors_matrix()   
+        #print("Analyzing graph:")
+        #graph.print_adj_matrix()    
+        #graph.print_colors_matrix()   
 
     # Testing mode - OPTARG
     # Test the scenarios we know are working
@@ -65,6 +66,15 @@ if __name__ == "__main__":
         graph.add_edge(0,2)
         graph.add_edge(1,2)
         graph.add_edge(2,3)
+
+        result = graph.color_matrix()
+        print("Chromatic Index calculated correctly? %s\n" % (3==result))
+
+        # Available functions for visualizing matrixes
+        print("Analyzing graph:")
+        graph.print_adj_matrix()    
+        graph.print_colors_matrix()  
+
 
 
         if testing_flag:

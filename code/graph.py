@@ -51,7 +51,8 @@ class Graph:
                     #print("Neighbours_colors: ", neighbour_colors)
 
                     # Since these neighbour colors are temporary for the edge we are looking at, we cant add them to the used colors. Since these used colors are ones we used on this vertice
-                    color = min( list( set(available_colors) - set(used_colors) - set(neighbour_colors)))
+                    tmp_colors = list( set(available_colors) - set(used_colors) - set(neighbour_colors))
+                    color = max(available_colors + used_colors + neighbour_colors)+1 if len(tmp_colors) == 0 else min(tmp_colors)
                     # then we fill the matrix with the color
                     self.colors_matrix[row_id][column_id] = color
                     self.colors_matrix[column_id][row_id] = color
